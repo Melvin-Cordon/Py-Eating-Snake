@@ -9,6 +9,7 @@ def update_screen(settings,screen,snake):
     screen.fill(settings.bg_color)
 
     #draw snake to screen
+    snake.update()
     snake.draw()
 
     # Make the most recently drawn screen visible
@@ -21,20 +22,32 @@ def check_event(settings, screen, snake):
             sys.exit()
         elif event.type == pg.KEYDOWN:
             check_keydown_events(event,settings, screen, snake)
-        elif event.type == pg.KEYUP:
-            check_keyup_events(event, snake)
+        """elif event.type == pg.KEYUP:
+            check_keyup_events(event, snake)"""
 
 def check_keydown_events(event,settings,screen,snake):
     """ Respond to keypresses """
     if event.key == pg.K_d:
-        print('d')
+        snake.moving_right = True
+        snake.moving_left = False
+        snake.moving_up = False
+        snake.moving_down = False
     elif event.key == pg.K_a:
-        print('a')
+        snake.moving_left = True
+        snake.moving_up = False
+        snake.moving_down = False
+        snake.moving_right = False
     elif event.key == pg.K_w:
-        print('w')
+        snake.moving_up = True
+        snake.moving_down = False
+        snake.moving_right = False
+        snake.moving_left = False
     elif event.key == pg.K_s:
-        print('s')
-
+        snake.moving_down = True
+        snake.moving_right = False
+        snake.moving_left = False
+        snake.moving_up = False
+"""
 def check_keyup_events(event,snake):
     if event.key == pg.K_d:
         print('d')
@@ -44,3 +57,4 @@ def check_keyup_events(event,snake):
         print('w')
     elif event.key == pg.K_s:
         print('s')
+"""

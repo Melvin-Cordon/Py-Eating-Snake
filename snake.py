@@ -15,7 +15,6 @@ class Node(Sprite):
         self.screen_rect = self.screen.get_rect()
         self.color = settings.snake_color
 
-
         # create a snake rect at (0,0) and then set correct position
         self.rect = pg.Rect(0, 0, self.settings.snake_width, self.settings.snake_height)
         self.rect.centerx = self.screen_rect.centerx
@@ -26,7 +25,6 @@ class Node(Sprite):
 
     def draw(self):
         """ Draw the snake to the screen """
-        print('here')
         pg.draw.rect(self.screen,self.color,self.rect)
 
 class Snake():
@@ -35,6 +33,12 @@ class Snake():
         self.screen_rect = screen.get_rect()
         self.settings = settings
         self.head = Node( self.screen, self.settings, [0,0])
+
+        # Movement flags
+        self.moving_right = False
+        self.moving_left = False
+        self.moving_up = False
+        self.moving_down = False
 
     def insert_end(self, val):
         if self.head == None:
@@ -52,3 +56,27 @@ class Snake():
         while curr_node.next != None:
             curr_node.draw()
             curr_node = curr_node.next
+
+    def update(self):
+
+        """ Move the snakes location """
+        #Update the decimal position of the snake.
+
+        curr_node = self.head
+        curr_node_x = curr_node
+        curr_node_y = curr_node
+
+        if self.moving_right:
+            curr_node.rect.centerx = curr_node.rect.centerx + 11
+            while curr_node.next != None:
+                curr_node = curr_node.next
+                curr_node.rect.centerx = curr_node_x
+                curr_node_x = curr_node
+
+
+        if self.moving_left:
+            curr_node.rect.centerx = curr_node.rect.centerx - 11
+            while curr_node.next != None:
+                curr_node = curr_node.next
+                curr_node.rect.centerx = curr_node_x
+                curr_node_x = curr_node

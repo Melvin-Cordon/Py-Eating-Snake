@@ -25,9 +25,8 @@ def run_game():
         clock = pg.time.Clock()
         clock.tick_busy_loop(30)
 
-
         # Watch for keyboard and mouse events.
-
+        gf.check_event(settings, screen, snake)
         gf.update_screen(settings, screen, snake)
 
 
