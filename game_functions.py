@@ -47,6 +47,13 @@ def check_keydown_events(event,settings,screen,snake):
         snake.moving_right = False
         snake.moving_left = False
         snake.moving_up = False
+    elif event.key == pg.K_SPACE:
+        snake.growing = True
+        snake.moving_down = False
+        snake.moving_right = False
+        snake.moving_left = False
+        snake.moving_up = False
+
 """
 def check_keyup_events(event,snake):
     if event.key == pg.K_d:

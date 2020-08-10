@@ -14,8 +14,3 @@ class Settings():
         self.space_snake_members = 1
         self.snake_color = 60, 60, 60
         self.snake_speed_factor = 11
-
-        # Food Setting
-        self.food_width = 10
-        self.food_height = 10
-        self.food_color = 60, 60, 60

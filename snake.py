@@ -5,7 +5,7 @@ import pygame as pg
 from pygame.sprite import Sprite
 
 class Node(Sprite):
-    def __init__(self, screen, settings, pos = None, prev_pos = None, next = None, prev = None):
+    def __init__(self, screen, settings, pos = [250,350], prev_pos = None, next = None, prev = None):
         super(Node, self).__init__()
         self.data = pos
         self.next = next
@@ -14,11 +14,12 @@ class Node(Sprite):
         self.screen = screen
         self.screen_rect = self.screen.get_rect()
         self.color = settings.snake_color
+        self.pos = pos
 
         # create a snake rect at (0,0) and then set correct position
-        self.rect = pg.Rect(0, 0, self.settings.snake_width, self.settings.snake_height)
-        self.rect.centerx = self.screen_rect.centerx
-        self.rect.centery = self.screen_rect.centery
+        self.rect = pg.Rect(self.pos[0], self.pos[1], self.settings.snake_width, self.settings.snake_height)
+        self.rect.centerx = self.pos[0]
+        self.rect.centery = self.pos[1]
 
         # Color of the snake head
         self.color = settings.snake_color
@@ -32,29 +33,33 @@ class Snake():
         self.screen = screen
         self.screen_rect = screen.get_rect()
         self.settings = settings
-        self.head = Node( self.screen, self.settings, [0,0])
+        self.head = Node( self.screen, self.settings)
+        self.tail = None
 
         # Movement flags
         self.moving_right = False
         self.moving_left = False
         self.moving_up = False
         self.moving_down = False
+        self.growing = False
 
-    def insert_end(self, val):
-        if self.head == None:
-            self.head = Node(val)
-            self.tail = self.head
+    def grow(self):
 
-        curr_node = self.tail
-        curr_node.next = Node(val, None, curr_node)
-        self.tail = curr_node.next
+        if self.tail == None:
+            self.head.next = Node( self.screen, self.settings, self.head.data)
+            self.tail = self.head.next
+            self.growing = False
+        else:
+            self.tail.next = Node( self.screen, self.settings, self.tail.data)
+            self.tail = self.tail.next
+            self.growing = False
 
     def draw(self):
         """ Draw the snake to the screen """
         curr_node = self.head
         curr_node.draw()
         while curr_node.next != None:
-            curr_node.draw()
+            curr_node.next.draw()
             curr_node = curr_node.next
 
     def update(self):
@@ -63,20 +68,48 @@ class Snake():
         #Update the decimal position of the snake.
 
         curr_node = self.head
-        curr_node_x = curr_node
-        curr_node_y = curr_node
+        change = False
+
+
 
         if self.moving_right:
-            curr_node.rect.centerx = curr_node.rect.centerx + 11
-            while curr_node.next != None:
-                curr_node = curr_node.next
-                curr_node.rect.centerx = curr_node_x
-                curr_node_x = curr_node
+            change = True
+            curr_node.data[0] = curr_node.rect.centerx
+            curr_node.data[1] = curr_node.rect.centery
+            curr_node.rect.centerx = curr_node.rect.centerx + self.settings.snake_speed_factor
 
 
         if self.moving_left:
-            curr_node.rect.centerx = curr_node.rect.centerx - 11
-            while curr_node.next != None:
+            change = True
+            curr_node.data[0] = curr_node.rect.centerx
+            curr_node.data[1] = curr_node.rect.centery
+            curr_node.rect.centerx = curr_node.rect.centerx - self.settings.snake_speed_factor
+
+        if self.moving_up:
+            change = True
+            curr_node.data[0] = curr_node.rect.centerx
+            curr_node.data[1] = curr_node.rect.centery
+            curr_node.rect.centery = curr_node.rect.centery - self.settings.snake_speed_factor
+
+        if self.moving_down:
+            change = True
+            curr_node.data[0] = curr_node.rect.centerx
+            curr_node.data[1] = curr_node.rect.centery
+            curr_node.rect.centery = curr_node.rect.centery + self.settings.snake_speed_factor
+
+        if self.growing:
+            self.grow()
+
+        if change == True:
+            while curr_node.next:
+                x = curr_node.data[0]
+                y = curr_node.data[1]
                 curr_node = curr_node.next
-                curr_node.rect.centerx = curr_node_x
-                curr_node_x = curr_node
+
+                curr_node.data[0] = curr_node.rect.centerx
+                curr_node.data[1] = curr_node.rect.centery
+
+                curr_node.rect.centerx = x
+                curr_node.rect.centery = y
+
+            change = False
