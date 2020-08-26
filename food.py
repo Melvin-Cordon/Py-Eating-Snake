@@ -29,12 +29,13 @@ class Node(Sprite):
         pg.draw.rect(self.screen,self.color,self.rect)
 
 class Food():
-    def __init__(self, settings, screen):
+    def __init__(self, settings, screen, coll):
         self.screen = screen
         self.screen_rect = screen.get_rect()
         self.settings = settings
         self.head = Node( self.screen, self.settings)
         self.tail = None
+        self.coll = coll
 
         # Movement flags
         self.moving_right = False
@@ -45,7 +46,10 @@ class Food():
 
     def update(self):
         """ Draw the snake to the screen """
-        x = 5
+        if self.head.rect.collidelist(self.coll) >= 0:
+            self.head.rect.centerx = random.randrange(0+(self.settings.food_width/2), 500+(self.settings.food_width/2) , self.settings.food_height)
+            self.head.rect.centery = random.randrange(0+(self.settings.food_width/2), 500+(self.settings.food_width/2) , self.settings.food_height)
+            self.draw()
 
     def draw(self):
         """ Draw the snake to the screen """

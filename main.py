@@ -18,7 +18,7 @@ def run_game():
 
     # Creating the snake object
     snake = Snake(settings, screen)
-    food = Food(settings, screen)
+    food = Food(settings, screen,[snake.head.rect])
 
     # Start main loop of game.
     while True:
