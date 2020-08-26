@@ -6,6 +6,7 @@ from pygame.sprite import Group
 import game_functions as gf
 from settings import Settings
 from snake import Snake
+from food import Food
 
 def run_game():
 
@@ -17,6 +18,7 @@ def run_game():
 
     # Creating the snake object
     snake = Snake(settings, screen)
+    food = Food(settings, screen)
 
     # Start main loop of game.
     while True:
@@ -26,8 +28,8 @@ def run_game():
         clock.tick_busy_loop(30)
 
         # Watch for keyboard and mouse events.
-        gf.check_event(settings, screen, snake)
-        gf.update_screen(settings, screen, snake)
+        gf.check_event(settings, screen, snake, food)
+        gf.update_screen(settings, screen, snake, food)
 
 
 #Staring Game

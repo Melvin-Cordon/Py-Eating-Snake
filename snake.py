@@ -99,6 +99,8 @@ class Snake():
 
         if self.growing:
             self.grow()
+    
+
 
         if change == True:
             while curr_node.next:
