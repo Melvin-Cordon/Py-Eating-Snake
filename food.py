@@ -29,13 +29,14 @@ class Node(Sprite):
         pg.draw.rect(self.screen,self.color,self.rect)
 
 class Food():
-    def __init__(self, settings, screen, coll):
+    def __init__(self, settings, screen, snake):
         self.screen = screen
         self.screen_rect = screen.get_rect()
         self.settings = settings
         self.head = Node( self.screen, self.settings)
         self.tail = None
-        self.coll = coll
+        self.coll = [snake.head.rect]
+        self.snake = snake
 
         # Movement flags
         self.moving_right = False
@@ -49,6 +50,7 @@ class Food():
         if self.head.rect.collidelist(self.coll) >= 0:
             self.head.rect.centerx = random.randrange(0+(self.settings.food_width/2), 500+(self.settings.food_width/2) , self.settings.food_height)
             self.head.rect.centery = random.randrange(0+(self.settings.food_width/2), 500+(self.settings.food_width/2) , self.settings.food_height)
+            self.snake.grow()
             self.draw()
 
     def draw(self):
@@ -57,5 +59,6 @@ class Food():
 
     def spawn(self):
         #checking
-        self.rect.centerx = random.randrange(0+(self.settings.food_width/2), 500+(self.settings.food_width/2) , self.settings.food_height)
-        self.rect.centery = random.randrange(0+(self.settings.food_width/2), 500+(self.settings.food_width/2) , self.settings.food_height)
+        self.snake.grow()
+        self.head.rect.centerx = random.randrange(0+(self.settings.food_width/2), 500+(self.settings.food_width/2) , self.settings.food_height)
+        self.head.rect.centery = random.randrange(0+(self.settings.food_width/2), 500+(self.settings.food_width/2) , self.settings.food_height)

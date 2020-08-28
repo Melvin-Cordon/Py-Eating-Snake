@@ -9,15 +9,15 @@ class Settings():
         self.bg_color = (230, 230, 230)
 
         # Snake settings
-        self.snake_width = 20
-        self.snake_height = 20
+        self.snake_width = 10
+        self.snake_height = 10
         self.space_snake_members = 42
         self.snake_color = 60, 60, 60
-        self.snake_speed_factor = 20
+        self.snake_speed_factor = 11
 
         # Food settings
-        self.food_width = 20
-        self.food_height = 20
+        self.food_width = 10
+        self.food_height = 10
         self.space_food_members = 42
         self.food_color = 60, 60, 60
         self.food_speed_factor = 20

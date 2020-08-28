@@ -43,14 +43,18 @@ class Snake():
         self.moving_down = False
         self.growing = False
 
+        self.coll = []
+
     def grow(self):
 
         if self.tail == None:
             self.head.next = Node( self.screen, self.settings, self.head.data)
+            self.coll.append(self.head.next)
             self.tail = self.head.next
             self.growing = False
         else:
             self.tail.next = Node( self.screen, self.settings, self.tail.data)
+            self.coll.append(self.tail.next)
             self.tail = self.tail.next
             self.growing = False
 
@@ -99,8 +103,11 @@ class Snake():
 
         if self.growing:
             self.grow()
-    
 
+        if self.head.rect.collidelist(self.coll) >= 0:
+            print("SCORE: " + str(len(self.coll)))
+            print("Loser")
+            sys.exit()
 
         if change == True:
             while curr_node.next:

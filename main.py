@@ -18,14 +18,14 @@ def run_game():
 
     # Creating the snake object
     snake = Snake(settings, screen)
-    food = Food(settings, screen,[snake.head.rect])
+    food = Food(settings, screen, snake)
 
     # Start main loop of game.
     while True:
 
         # setting frame rate
         clock = pg.time.Clock()
-        clock.tick_busy_loop(30)
+        clock.tick_busy_loop(20)
 
         # Watch for keyboard and mouse events.
         gf.check_event(settings, screen, snake, food)
