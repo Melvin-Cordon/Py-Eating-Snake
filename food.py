@@ -13,7 +13,7 @@ class Node(Sprite):
         self.settings = settings
         self.screen = screen
         self.screen_rect = self.screen.get_rect()
-        self.color = settings.snake_color
+        self.color = settings.food_color
         self.pos = pos
 
         # create a snake rect at (0,0) and then set correct position
@@ -22,7 +22,7 @@ class Node(Sprite):
         self.rect.centery = random.randrange(0+(self.settings.food_width/2), 500+(self.settings.food_width/2) , self.settings.food_height)
 
         # Color of the snake head
-        self.color = settings.snake_color
+        self.color = settings.food_color
 
     def draw(self):
         """ Draw the snake to the screen """

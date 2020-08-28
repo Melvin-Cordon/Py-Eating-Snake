@@ -19,5 +19,5 @@ class Settings():
         self.food_width = 10
         self.food_height = 10
         self.space_food_members = 42
-        self.food_color = 60, 60, 60
+        self.food_color = (255, 000, 000)
         self.food_speed_factor = 20
